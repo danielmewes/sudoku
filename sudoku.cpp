@@ -5,6 +5,7 @@
 #include <vector>
 #include <functional>
 #include <assert.h>
+#include <stdlib.h>
 
 #include "field.h"
 #include "grid.h"
@@ -28,7 +29,7 @@ void solveDeterministicUntilStuck(Grid *grid) {
 }
 
 void solve(Grid *grid, int depth = 0) {
-    const int MAX_DEPTH = 10;
+    const int MAX_DEPTH = 16;
     if (depth > MAX_DEPTH) {
         std::cerr << "Recursion depth limit hit.\n";
     }
@@ -40,7 +41,7 @@ void solve(Grid *grid, int depth = 0) {
     if (!grid->isResolved() && !grid->hasConflict()) {
         Grid branch = *grid;
         Guess guess = guessOne(&branch);
-        std::cout << "Guessing " << guess.row << "," << guess.col << "=" << guess.value << " (depth=" << depth << ")\n";
+        std::cout << "Guessing " << guess.row + 1 << "," << guess.col + 1 << "=" << guess.value << " (depth=" << depth << ")\n";
         if (guess.value != 0) {
             // Continue recursively, assuming the guess
             solve(&branch, depth + 1);
@@ -62,6 +63,10 @@ void solve(Grid *grid, int depth = 0) {
 
 void readSudoku(const std::string &filename, Grid *grid_out) {
     std::ifstream file(filename.c_str());
+    if (!file.good()) {
+        std::cerr << "Cannot open file: " << filename << "\n";
+        exit(-1);
+    }
     assert(file.good());
     size_t row = 0;
     size_t col = 0;
@@ -69,9 +74,11 @@ void readSudoku(const std::string &filename, Grid *grid_out) {
         char ch;
         file.get(ch);
         switch (ch) {
+            case '\r':
             case '\n':
                 assert(col == 0 || col == 9);
-                // So we skip over seperator lines
+                // if col is 0, this might have been a separator line (-----)
+                // or we got DOS line endings.
                 if (col == 9) {
                     ++row;
                 }
@@ -86,7 +93,7 @@ void readSudoku(const std::string &filename, Grid *grid_out) {
                 break;
             default:
                 if (ch > '9' || ch < '1') {
-                    std::cerr << "Unexpected character '" << ch << "' on line " << row + 1 << "\n";
+                    std::cerr << "Unexpected character '" << ch << "\n";
                 }
                 assert('1' <= ch && ch <= '9');
                 (*grid_out)[row][col].setResolved(static_cast<int>(ch - '0'));
@@ -131,7 +138,11 @@ char formatFieldCandidate(int value, const Field &field) {
 }
 
 int main(int argc, char **argv) {
-    assert(argc == 2);
+    if (argc != 2) {
+        std::cerr << "Wrong number of arguments. Please call: \n" << argv[0] << " <filename.ss>\n";
+        exit(-1);
+    }
+    assert(argc >= 2);
     std::string filename = argv[1];
 
     Grid grid;

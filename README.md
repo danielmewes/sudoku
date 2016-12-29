@@ -25,7 +25,7 @@ Most simple Sudokus that don't require guessing can be solved by the first two s
 
 ```
 $ cd sudoku
-$ g++ -std=c++11 *.cpp strategies/*.cpp -o sudoku
+$ make
 ```
 
 # Example run
@@ -48,11 +48,11 @@ Input:
 
 Solving:
 ...
-Guessing 1,0=3 (depth=0)
+Guessing 2,1=3 (depth=0)
 ...
-Guessing 2,1=2 (depth=1)
+Guessing 3,2=2 (depth=1)
 .....
-Guessing 0,1=4 (depth=2)
+Guessing 1,2=4 (depth=2)
 .....
 Made a wrong guess, but learnt something from it.
 ....
@@ -76,6 +76,6 @@ Solved it :)
 
 # TODO
 
-* Error handling (stop using asserts for it)
-* A Makefile
+* Better error handling (stop using asserts for it)
 * `--help` option etc.
+* A verbose "single step" output mode?
