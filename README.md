@@ -19,7 +19,7 @@ I just made these up, so they might have different more common names.
 * `resolveRequired` Resolve fields for which we *must* pick a certain candidate to complete a row / column / 3x3 cell.
 * `guessOne` Select the field with the smallest number of candidates, and just assume the first one. Then continue recursively. If this results in a conflict, eliminate the candidate.
 
-Most simple Sudokus that don't require guessing can be solved by the first two strategies alone.
+Many easy Sudokus that don't require guessing can be solved by the first two strategies alone.
 
 # Build instructions
 
