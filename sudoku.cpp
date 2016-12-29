@@ -92,19 +92,28 @@ int main(int argc, char **argv) {
         std::cerr << "Wrong number of arguments. Please call: \n" << argv[0] << " <filename.ss>\n";
         exit(-1);
     }
+
     assert(argc >= 2);
     std::string filename = argv[1];
-
     Grid grid;
     readSudoku(filename, &grid);
+
     std::cout << "Input:\n";
     printSudoku(grid, &formatFieldResolved);
     std::cout << "\n";
-    assert(!grid.hasConflict());
+    if (grid.hasConflict()) {
+        std::cerr << "The input has a conflict.\n";
+        exit(2);
+    }
     
     std::cout << "Solving:\n";
     solve(&grid);
-    assert(!grid.hasConflict());
+    if (grid.hasConflict()) {
+        std::cout << "\n";
+        std::cerr << "Generated a conflict. This could mean that the input was unsolvable.\n";
+        exit(2);
+    }
+
     std::cout << "\nResult:\n";
     printSudoku(grid, &formatFieldResolved);
     
@@ -112,6 +121,7 @@ int main(int argc, char **argv) {
         std::cout << "\nSolved it :)\n";
         return 0;
     } else {
+        std::cout << "\nCouldn't solve it :(\n";
         return 1;
     }
 }
