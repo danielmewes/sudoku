@@ -6,33 +6,20 @@
 #include "../field.h"
 #include "../grid.h"
 
-class CollectResolvedHelper {
-public:
-    void operator()(Field *field) {
-        if (field->isResolved()) {
-            result.insert(field->getResolved());
-        }
-    }
-
-    const std::set<int> &getResult() const {
-        return result;
-    }
-
-private:
-    std::set<int> result;
-};
 
 void eliminateConflicts(const std::function<void(size_t cell, const std::function<void(Field *)> &f)> &iterate) {
     for (size_t i = 0; i < 9; ++i) {
-        CollectResolvedHelper collect;
+        std::set<int> collected;
         iterate(i, [&](Field *field) {
-            collect(field);
+            if (field->isResolved()) {
+                collected.insert(field->getResolved());
+            }
         });
         iterate(i, [&](Field *field) {
             if (field->isResolved()) {
                 return;
             }
-            for (int usedCandidate : collect.getResult()) {
+            for (int usedCandidate : collected) {
                 field->eraseCandidate(usedCandidate);
             }
         });

@@ -28,12 +28,12 @@ void solve(Grid *grid, int depth) {
     const int MAX_DEPTH = 16;
     if (depth > MAX_DEPTH) {
         std::cerr << "Recursion depth limit hit.\n";
-    }
-    if (depth > MAX_DEPTH) {
         return;
     }
+
     solveDeterministicUntilStuck(grid);
     std::cout << "\n";
+
     if (!grid->isResolved() && !grid->hasConflict()) {
         Grid branch = *grid;
         Guess guess = guessOne(&branch);
