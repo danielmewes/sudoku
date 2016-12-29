@@ -2,7 +2,7 @@
 
 A rudimentary Sudoku solver. While it is simple, it seems to be able to solve even the hardest Sudokus with ease.
 
-It reads a Sudoku in the ("Simple Sudoku" file format)[http://www.sudocue.net/fileformats.php].
+It reads a Sudoku in the ["Simple Sudoku" file format](http://www.sudocue.net/fileformats.php).
 
 I wrote this in a single evening as an experiment, so it's not particularly polished.
 
