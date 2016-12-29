@@ -1,4 +1,5 @@
-_What_
+# What
+
 A rudimentary Sudoku solver. While it is simple, it seems to be able to solve even the hardest Sudokus with ease.
 
 It reads a Sudoku in the ("Simple Sudoku" file format)[http://www.sudocue.net/fileformats.php].
@@ -8,13 +9,15 @@ I wrote this in a single evening as an experiment, so it's not particularly poli
 Background: I had been solving some Sudoku's in the past days for fun. I was using the Android App "Andoku 3", which has a feature that allows you to conveniently mark possible candidates on a field.
 After a few rounds, I noticed that I had started to use a fairly systematic approach for solving Sudokus by noting and systematically eliminating candidates. So I started to wonder if I could put my mental process into code. Turns out the answer is yes. :)
 
-_Build instructions_
+# Build instructions
+
 ```
 $ cd sudoku
 $ g++ -std=c++11 *.cpp strategies/*.cpp -o sudoku
 ```
 
-_Example run_
+# Example run
+
 ```
 $ ./sudoku examples/unsolvable1.ss
 Input:
@@ -59,7 +62,8 @@ Result:
 Solved it :)
 ```
 
-_TODO_
+# TODO
+
 * Error handling (stop using asserts for it)
 * A Makefile
 * `--help` option etc.
